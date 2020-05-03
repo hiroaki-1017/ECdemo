@@ -3,6 +3,7 @@ Vue.filter('number_format', function(val) {
 })
 var app = new Vue({
     el: '#app',
+    
     data: {
         //表示中の商品数
         //セ－ル対象のチェック状態
