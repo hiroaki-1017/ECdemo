@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>study</title>
+    <link rel="stylesheet" href="study.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <h1 class="pageTitle">商品一覧</h1>
+            <!--検索欄-->
+            <div class="search">
+                <div class="result">
+                    検索結果 <span class="count">{{filteredList.length}}件</span>
+                </div>
+                <div class="condition">
+                    <div class="target">
+                        <label><input type="checkbox" v-model="showSaleItem"> セール対象</label>
+                        <label><input type="checkbox" v-model="showDelvFree"> 送料無料</label>
+                    </div>
+                    <!--チェックボックスなどの動作を挟まないと処理されない現象-->
+                    <div class="sort">
+                        <label for="sort">並び替え</label>
+                        <select class="sorting" id="sort" v-model.number="sortOrder">
+                            <option value="1">標準</option>
+                            <option value="2">価格が安い順</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--商品一覧-->
+            <div class="list">
+                <div class="item" v-for="product in filteredList" v-bind:key="product.id">
+                    <figure class="image">
+                        <template v-if="product.isSale">
+                            <!--セール対象の場合-->
+                            <div class="status">SALE</div>
+                            <!--セール対象の場合-->
+                        </template>
+                        <img v-bind:src="product.image" alt="">
+                        <figcaption v-html="product.name"></figcaption>
+                    </figure>
+                    <div class="detail">
+                        <div class="price"><span>{{product.price | number_format}}</span>円(税込)</div>
+                        <template v-if="product.delv == 0">
+                            <!--送料無料の場合-->
+                            <div class="shopping-fee none">送料無料</div>
+                            <!--送料無料の場合-->
+                        </template> 
+                        <template v-else>
+                            <div class="shopping-fee">+送料{{product.delv | number_format}}</div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="study.js"></script>
+</body>
+
+</html>
